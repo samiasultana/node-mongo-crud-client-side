@@ -27,10 +27,6 @@ function App() {
               element={<AddUser></AddUser>}
             ></Route>
 
-            <Route path="/users/add"
-              element={<AddUser></AddUser>}>
-            </Route>
-
             <Route path="/users/update/:id"
               element={<UpdateUser></UpdateUser>}>
             </Route>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -11,28 +12,28 @@ const Users = () => {
 
     // DELETE AN USER
     const handleDeleteUser = id => {
-        const proceed=window.confirm("Sure you wanna delete?");
-    if(proceed){
-        fetch(`http://localhost:5000/users/${id}`,
-            {
-                method: 'DELETE'
-            })
-                .then(res=>res.json())
-                .then(data=>{
-                    if(data.deletedCount>0)
-                    alert("Deleted Successfully");
+        const proceed = window.confirm("Sure you wanna delete?");
+        if (proceed) {
+            fetch(`http://localhost:5000/users/${id}`,
+                {
+                    method: 'DELETE'
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0)
+                        alert("Deleted Successfully");
                     // remove from UI without reloading
-                    const remainingUsers=users.filter(user=>user._id!==id);
+                    const remainingUsers = users.filter(user => user._id !== id);
                     setUsers(remainingUsers);
                 })
+        }
     }
-}
-//     const handleDeleteUser = id => {
-//     const proceed=window.confirm("Sure you wanna delete?");
-//     if(proceed){
-//         fetch()
-//     }
-// } eta dile make sure korbe delete confirm kina
+    //     const handleDeleteUser = id => {
+    //     const proceed=window.confirm("Sure you wanna delete?");
+    //     if(proceed){
+    //         fetch()
+    //     }
+    // } eta dile make sure korbe delete confirm kina
 
 
     return (
@@ -42,7 +43,9 @@ const Users = () => {
                 {
                     users.map(user => <li
                         key={user._id}>{user.name}: {user.email}
-                        <button>Update</button>
+                        <Link to={`/users/update/${user._id}`}>
+                            <button>Update</button>
+                        </Link>
                         <button onClick={() => handleDeleteUser(user._id)}>X</button>
                     </li>)
                 }
